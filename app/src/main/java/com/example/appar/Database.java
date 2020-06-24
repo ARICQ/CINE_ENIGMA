@@ -59,5 +59,24 @@ public class Database extends SQLiteOpenHelper {
         return  res;
     }
 
+    public boolean updateData(String title, String date, String note_scenario, String note_realisation, String note_musique, String description) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2, title);
+        contentValues.put(COL_3, date);
+        contentValues.put(COL_4, note_scenario);
+        contentValues.put(COL_5, note_realisation);
+        contentValues.put(COL_6, note_musique);
+        contentValues.put(COL_7, description);
+        db.update(TABLE_NAME, contentValues, "title = ?", new String[] {title});
+        return  true;
+    }
+
+    public Integer deleteData (String title) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, "title = ?", new String[] {title});
+
+    }
+
 
 }

@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     EditText title_zone, date_zone, scenario_zone, realisation_zone, musique_zone, description_zone, mail_zone;
     Button btn_valider;
     Button btn_afficher;
+    Button btn_modifier;
+    Button btn_supprimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +37,15 @@ public class MainActivity extends AppCompatActivity {
         mail_zone = (EditText)findViewById(R.id.mail_zone);
 
         btn_valider = (Button)findViewById(R.id.btn_valider);
-
+        btn_modifier = (Button)findViewById(R.id.btn_modifier);
         btn_afficher = (Button)findViewById(R.id.btn_afficher);
+        btn_supprimer = (Button)findViewById(R.id.btn_supprimer);
 
         AddData();
         displayAll();
+        UpdateData();
+        deleteData();
+
     }
 
     public void AddData(){
@@ -133,6 +139,43 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this,
                     "Erreur", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    public void UpdateData(){
+        btn_modifier.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean isUpdated = myDb.updateData(title_zone.getText().toString(), date_zone.getText().toString(), scenario_zone.getText().toString(), realisation_zone.getText().toString(), musique_zone.getText().toString(), description_zone.getText().toString());
+                        if(isUpdated == true){
+                            Toast.makeText(MainActivity.this, "Data updated", Toast.LENGTH_LONG).show();
+
+                        }
+                        else
+                            Toast.makeText(MainActivity.this, "Data not updated", Toast.LENGTH_LONG).show();
+
+
+                    }
+                }
+        );
+    }
+
+    public void deleteData() {
+        btn_supprimer.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Integer deletedRows = myDb.deleteData(title_zone.getText().toString());
+                        if(deletedRows > 0){
+                            Toast.makeText(MainActivity.this, "Data deleted", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                            Toast.makeText(MainActivity.this, "Data not deleted", Toast.LENGTH_LONG).show();
+
+                    }
+                }
+        );
     }
 
 
