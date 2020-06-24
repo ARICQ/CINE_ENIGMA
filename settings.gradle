@@ -1,0 +1,2 @@
+rootProject.name='AppAR'
+include ':app'
